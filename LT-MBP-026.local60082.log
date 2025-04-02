@@ -1,0 +1,11 @@
+{"level":"info","time":"2025-04-01T22:09:56.670+0530","caller":"cmd/lt.go:207","msg":"LambdaTest Tunnel version: 3.2.14"}
+{"level":"info","time":"2025-04-01T22:09:58.170+0530","caller":"custom/setup.go:867","msg":"Tunnel binary started on port :60083"}
+{"level":"info","time":"2025-04-01T22:10:00.520+0530","caller":"core/lifecycle.go:308","msg":"Launching tunnel"}
+{"level":"error","time":"2025-04-01T22:10:03.190+0530","caller":"tunnelmanager/controller.go:117","msg":"conflict: Tunnel with name: my-tunnel is already running for user roshank@lambdatest.com"}
+{"level":"error","time":"2025-04-01T22:10:03.190+0530","caller":"core/lifecycle.go:311","msg":"There was an error while starting tunnel: ERR::LUNCH::TUNN : Launch tunnel failed conflict: Tunnel with name: my-tunnel is already running for user roshank@lambdatest.com "}
+{"level":"info","time":"2025-04-01T22:10:03.190+0530","caller":"cmd/lt.go:237","msg":"Tunnel aborted, starting new tunnel."}
+{"level":"info","time":"2025-04-01T22:10:14.814+0530","caller":"custom/setup.go:867","msg":"Tunnel binary started on port :60083"}
+{"level":"info","time":"2025-04-01T22:10:15.692+0530","caller":"core/lifecycle.go:308","msg":"Launching tunnel"}
+{"level":"error","time":"2025-04-01T22:10:17.291+0530","caller":"tunnelmanager/controller.go:117","msg":"conflict: Tunnel with name: my-tunnel is already running for user roshank@lambdatest.com"}
+{"level":"error","time":"2025-04-01T22:10:17.291+0530","caller":"core/lifecycle.go:311","msg":"There was an error while starting tunnel: ERR::LUNCH::TUNN : Launch tunnel failed conflict: Tunnel with name: my-tunnel is already running for user roshank@lambdatest.com "}
+{"level":"info","time":"2025-04-01T22:10:17.291+0530","caller":"cmd/lt.go:237","msg":"Tunnel aborted, starting new tunnel."}
