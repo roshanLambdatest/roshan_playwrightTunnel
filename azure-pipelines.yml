@@ -1,0 +1,11 @@
+trigger:
+  - main  # Adjust this to the branch you want to trigger builds on
+
+pool:
+  name: 'Default'  # Replace with your self-hosted agent pool name
+
+steps:
+  - checkout: self  # Clones your GitHub repo
+  - script: echo "Running on Azure DevOps"
+  - script: npm install  # Example: Install dependencies
+  - script: npm test  # Example: Run tests
