@@ -8,4 +8,4 @@ steps:
   - checkout: self  # Clones your GitHub repo
   - script: echo "Running on Azure DevOps"
   - script: npm install  # Example: Install dependencies
-  - script: npm test  # Example: Run tests
+  - script: npx playwright test  # Example: npx playwright test
