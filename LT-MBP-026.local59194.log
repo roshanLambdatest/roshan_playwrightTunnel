@@ -1,3 +1,0 @@
-{"level":"info","time":"2025-04-01T21:48:31.766+0530","caller":"cmd/lt.go:207","msg":"LambdaTest Tunnel version: 3.2.14"}
-{"level":"info","time":"2025-04-01T21:48:32.627+0530","caller":"custom/setup.go:867","msg":"Tunnel binary started on port :59195"}
-{"level":"info","time":"2025-04-01T21:48:34.128+0530","caller":"core/lifecycle.go:308","msg":"Launching tunnel"}

@@ -1,6 +1,0 @@
-{"level":"info","time":"2025-04-01T20:20:22.761+0530","caller":"cmd/lt.go:207","msg":"LambdaTest Tunnel version: 3.2.14"}
-{"level":"info","time":"2025-04-01T20:20:23.699+0530","caller":"custom/setup.go:867","msg":"Tunnel binary started on port :57370"}
-{"level":"info","time":"2025-04-01T20:20:26.230+0530","caller":"core/lifecycle.go:308","msg":"Launching tunnel"}
-{"level":"info","time":"2025-04-01T20:20:30.767+0530","caller":"core/lifecycle.go:430","msg":"You can start testing now"}
-{"level":"info","time":"2025-04-01T20:20:30.767+0530","caller":"core/lifecycle.go:431","msg":"Tunnel ID: 5187746"}
-{"level":"info","time":"2025-04-01T20:21:53.391+0530","caller":"ws/control.go:158","msg":"Tunnel closure requested from server. Exiting"}

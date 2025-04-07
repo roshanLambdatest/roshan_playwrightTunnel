@@ -327,26 +327,26 @@ async function startTunnel() {
 }
 
 // Function to stop the tunnel
-async function stopTunnel() {
-  if (tunnelStarted) {
-    try {
-      await new Promise((resolve, reject) => {
-        tunnelInstance.stop((err) => {
-          if (err) {
-            console.error("Failed to stop tunnel:", err);
-            reject(err);
-          } else {
-            console.log("Tunnel stopped successfully");
-            tunnelStarted = false;
-            resolve(true);
-          }
-        });
-      });
-    } catch (error) {
-      console.error("Tunnel stop error:", error);
-    }
-  }
-}
+// async function stopTunnel() {
+//   if (tunnelStarted) {
+//     try {
+//       await new Promise((resolve, reject) => {
+//         tunnelInstance.stop((err) => {
+//           if (err) {
+//             console.error("Failed to stop tunnel:", err);
+//             reject(err);
+//           } else {
+//             console.log("Tunnel stopped successfully");
+//             tunnelStarted = false;
+//             resolve(true);
+//           }
+//         });
+//       });
+//     } catch (error) {
+//       console.error("Tunnel stop error:", error);
+//     }
+//   }
+// }
 
 // Modify capabilities dynamically
 const modifyCapabilities = (configName, testName) => {
@@ -361,6 +361,9 @@ const modifyCapabilities = (configName, testName) => {
 // Ensure tunnel starts before all tests
 base.test.beforeAll(async () => {
   await startTunnel();
+  // Add a delay after tunnel start (e.g., 10s) to ensure readiness
+await new Promise(resolve => setTimeout(resolve, 10000));
+
 });
 
 // Stop tunnel after all tests
