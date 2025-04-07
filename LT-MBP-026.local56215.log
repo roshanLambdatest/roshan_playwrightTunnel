@@ -1,8 +1,0 @@
-{"level":"info","time":"2025-04-02T21:35:23.828+0530","caller":"cmd/lt.go:207","msg":"LambdaTest Tunnel version: 3.2.14"}
-{"level":"info","time":"2025-04-02T21:35:24.815+0530","caller":"custom/setup.go:867","msg":"Tunnel binary started on port :56216"}
-{"level":"info","time":"2025-04-02T21:35:27.684+0530","caller":"core/lifecycle.go:308","msg":"Launching tunnel"}
-{"level":"info","time":"2025-04-02T21:35:32.401+0530","caller":"core/lifecycle.go:430","msg":"You can start testing now"}
-{"level":"info","time":"2025-04-02T21:35:32.402+0530","caller":"core/lifecycle.go:431","msg":"Tunnel ID: 5209223"}
-{"level":"info","time":"2025-04-02T21:35:43.154+0530","caller":"core/lifecycle.go:476","msg":"Stopping tunnel"}
-{"level":"error","time":"2025-04-02T21:35:43.191+0530","caller":"ssh/ssh.go:252","msg":"Unable to connect to 127.0.0.1:56216, error: dial tcp 127.0.0.1:56216: connect: connection refused"}
-{"level":"error","time":"2025-04-02T21:35:43.204+0530","caller":"ssh/ssh.go:252","msg":"Unable to connect to 127.0.0.1:56216, error: dial tcp 127.0.0.1:56216: connect: connection refused"}
