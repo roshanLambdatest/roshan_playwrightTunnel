@@ -1,7 +1,0 @@
-{"level":"info","time":"2025-04-02T13:42:23.526+0530","caller":"cmd/lt.go:207","msg":"LambdaTest Tunnel version: 3.2.14"}
-{"level":"info","time":"2025-04-02T13:42:24.398+0530","caller":"custom/setup.go:867","msg":"Tunnel binary started on port :61495"}
-{"level":"info","time":"2025-04-02T13:42:26.477+0530","caller":"core/lifecycle.go:308","msg":"Launching tunnel"}
-{"level":"info","time":"2025-04-02T13:42:30.630+0530","caller":"core/lifecycle.go:430","msg":"You can start testing now"}
-{"level":"info","time":"2025-04-02T13:42:30.630+0530","caller":"core/lifecycle.go:431","msg":"Tunnel ID: 5200983"}
-{"level":"info","time":"2025-04-02T13:42:50.631+0530","caller":"core/lifecycle.go:476","msg":"Stopping tunnel"}
-{"level":"error","time":"2025-04-02T13:42:50.671+0530","caller":"ssh/ssh.go:252","msg":"Unable to connect to 127.0.0.1:61495, error: dial tcp 127.0.0.1:61495: connect: connection refused"}
