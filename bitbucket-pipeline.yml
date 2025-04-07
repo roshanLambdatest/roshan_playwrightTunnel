@@ -1,0 +1,11 @@
+image: node:18
+
+pipelines:
+  default:
+    - step:
+        name: Install and Test
+        caches:
+          - node
+        script:
+          - npm install
+          - npx playwright test
