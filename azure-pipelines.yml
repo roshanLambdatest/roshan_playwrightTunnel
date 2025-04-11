@@ -1,11 +1,39 @@
+# trigger:
+#   - main  # Adjust this to the branch you want to trigger builds on
+
+# pool:
+#   name: 'Default'  # Replace with your self-hosted agent pool name
+
+# steps:
+#   - checkout: self  # Clones your GitHub repo
+#   - script: echo "Running on Azure DevOps"
+#   - script: npm install  # Example: Install dependencies
+#   - script: npx playwright test  # Example: npx playwright test
 trigger:
   - main  # Adjust this to the branch you want to trigger builds on
 
 pool:
   name: 'Default'  # Replace with your self-hosted agent pool name
 
+variables:
+  LT_USERNAME: 'roshank'      # Make sure these are set in pipeline or as secrets
+  LT_ACCESS_KEY: 'LT_pdN9i3brrjhqvhD82BuHMGL29zUl83MBQpdartL2hae9QdE'
+  LT_BUILD_NAME: 'Playwright Build'
+
 steps:
   - checkout: self  # Clones your GitHub repo
+
   - script: echo "Running on Azure DevOps"
-  - script: npm install  # Example: Install dependencies
-  - script: npx playwright test  # Example: npx playwright test
+
+  - script: npm install
+    displayName: 'Install dependencies'
+
+  - script: npx playwright test
+    displayName: 'Run Playwright Tests'
+
+  - task: LambdatestResults@1
+    inputs:
+      username: 'roshank'
+      accessKey: 'LT_pdN9i3brrjhqvhD82BuHMGL29zUl83MBQpdartL2hae9QdE'
+      buildName: '$(LT_BUILD_NAME)'
+    displayName: 'Publish LambdaTest Results'
