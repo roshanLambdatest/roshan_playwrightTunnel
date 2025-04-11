@@ -18,7 +18,7 @@ pool:
 variables:
   LT_USERNAME: 'roshank'      # Make sure these are set in pipeline or as secrets
   LT_ACCESS_KEY: 'LT_pdN9i3brrjhqvhD82BuHMGL29zUl83MBQpdartL2hae9QdE'
-  LT_BUILD_NAME: 'Playwright Build 123'
+  # LT_BUILD_NAME: 'Playwright Build 123'
 
 steps:
   - checkout: self  # Clones your GitHub repo
@@ -35,5 +35,5 @@ steps:
     inputs:
       username: 'roshank'
       accessKey: 'LT_pdN9i3brrjhqvhD82BuHMGL29zUl83MBQpdartL2hae9QdE'
-      buildName: 'Playwright Build 123'
+      # buildName: 'Playwright Build 123'
     displayName: 'Publish LambdaTest Results'
