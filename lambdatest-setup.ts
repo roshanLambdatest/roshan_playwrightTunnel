@@ -299,32 +299,32 @@ let tunnelInstance = new lambdaTunnel();
 let tunnelStarted = false;
 
 // Function to start the tunnel
-async function startTunnel() {
-  if (!tunnelStarted) {
-    try {
-      await new Promise((resolve, reject) => {
-        tunnelInstance.start({
-          user: capabilities["LT:Options"].user,
-          key: capabilities["LT:Options"].accessKey,
-          tunnelName: "my-tunnel",
-        }, (err) => {
-          if (err) {
-            console.error("Tunnel failed to start:", err);
-            reject(err);
-          } else {
-            console.log("Tunnel started successfully");
-            tunnelStarted = true;
-            resolve(true);
-          }
-        });
-      });
-    } catch (error) {
-      console.error("Tunnel start error:", error);
-    }
-  } else {
-    console.log("Tunnel already running");
-  }
-}
+// async function startTunnel() {
+//   if (!tunnelStarted) {
+//     try {
+//       await new Promise((resolve, reject) => {
+//         tunnelInstance.start({
+//           user: capabilities["LT:Options"].user,
+//           key: capabilities["LT:Options"].accessKey,
+//           tunnelName: "my-tunnel",
+//         }, (err) => {
+//           if (err) {
+//             console.error("Tunnel failed to start:", err);
+//             reject(err);
+//           } else {
+//             console.log("Tunnel started successfully");
+//             tunnelStarted = true;
+//             resolve(true);
+//           }
+//         });
+//       });
+//     } catch (error) {
+//       console.error("Tunnel start error:", error);
+//     }
+//   } else {
+//     console.log("Tunnel already running");
+//   }
+// }
 
 // Function to stop the tunnel
 // async function stopTunnel() {
@@ -359,12 +359,12 @@ const modifyCapabilities = (configName, testName) => {
 };
 
 // Ensure tunnel starts before all tests
-base.test.beforeAll(async () => {
-  await startTunnel();
-  // Add a delay after tunnel start (e.g., 10s) to ensure readiness
-await new Promise(resolve => setTimeout(resolve, 10000));
+// base.test.beforeAll(async () => {
+//   await startTunnel();
+//   // Add a delay after tunnel start (e.g., 10s) to ensure readiness
+// await new Promise(resolve => setTimeout(resolve, 10000));
 
-});
+// });
 
 // Stop tunnel after all tests
 // base.test.afterAll(async () => {
