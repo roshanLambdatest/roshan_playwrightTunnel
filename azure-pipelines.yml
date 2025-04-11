@@ -35,5 +35,5 @@ steps:
     inputs:
       username: 'roshank'
       accessKey: 'LT_pdN9i3brrjhqvhD82BuHMGL29zUl83MBQpdartL2hae9QdE'
-      buildName: '$(LT_BUILD_NAME)'
+      buildName: 'Playwright Build 123'
     displayName: 'Publish LambdaTest Results'
