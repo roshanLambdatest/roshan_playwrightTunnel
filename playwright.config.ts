@@ -72,6 +72,6 @@ const config: PlaywrightTestConfig = {
     // },
   ],
 };
-export LT_BUILD="Playwright Build 123"  # Should match what's used in YAML
+
 
 export default config;
