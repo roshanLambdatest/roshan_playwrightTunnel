@@ -289,7 +289,7 @@ const capabilities = {
     video: true,
     console: true,
     tunnel: true, // Ensure tunnel is enabled
-    tunnelName: "my-tunnel",
+    // tunnelName: "",
     geoLocation: '',
   },
 };
