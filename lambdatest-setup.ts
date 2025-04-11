@@ -281,7 +281,7 @@ const capabilities = {
   browserVersion: "latest",
   "LT:Options": {
     platform: "Windows 10",
-    build: "Playwright TS Build",
+    build: process.env.LT_BUILD_NAME ,
     name: "Playwright Test",
     user: 'roshank',
     accessKey: 'LT_pdN9i3brrjhqvhD82BuHMGL29zUl83MBQpdartL2hae9QdE',
