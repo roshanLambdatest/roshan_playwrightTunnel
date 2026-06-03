@@ -11,9 +11,9 @@ pr:
 pool:
   vmImage: 'ubuntu-latest'
 
-# variables:
-#   BASE64_AUTH: $(BASE64_AUTH)
-#   TEST_RUN_ID: $(TEST_RUN_ID)
+variables:
+  BASE64_AUTH: cm9zaGFuazpMVF9ZTDJ4WlFpUExWUkdHdE93dEZvT0VWZkdhOWx6RklKZkZmQnptQnREYXVPVDFjSw==
+  TEST_RUN_ID: 01KT5E7P5Q8KXARD56BB2PE049
 
 stages:
 - stage: RunSanityTests
@@ -38,7 +38,7 @@ stages:
             --header 'Content-Type: application/json' \
             --header "Authorization: Basic $BASE64_AUTH" \
             --data "{
-              \"test_run_id\": \"01KT5E7P5Q8KXARD56BB2PE049\",
+              \"test_run_id\": \"$TEST_RUN_ID\",
               \"concurrency\": 1
             }")
 
@@ -66,7 +66,7 @@ stages:
 
           response=$(curl --silent --location "https://api.hyperexecute.cloud/v2.0/job/$(JOB_ID)" \
             --header "accept: application/json" \
-            --header "Authorization: Basic cm9zaGFuazpMVF9ZTDJ4WlFpUExWUkdHdE93dEZvT0VWZkdhOWx6RklKZkZmQnptQnREYXVPVDFjSw==")
+            --header "Authorization: Basic $BASE64_AUTH")
 
           echo "Response: $response"
 
