@@ -1,39 +1,82 @@
-# trigger:
-#   - main  # Adjust this to the branch you want to trigger builds on
-
-# pool:
-#   name: 'Default'  # Replace with your self-hosted agent pool name
-
-# steps:
-#   - checkout: self  # Clones your GitHub repo
-#   - script: echo "Running on Azure DevOps"
-#   - script: npm install  # Example: Install dependencies
-#   - script: npx playwright test  # Example: npx playwright test
 trigger:
-  - main  # Adjust this to the branch you want to trigger builds on
+  branches:
+    include:
+      - main
+
+pr:
+  branches:
+    include:
+      - main
 
 pool:
-  name: 'Default'  # Replace with your self-hosted agent pool name
+  vmImage: 'ubuntu-latest'
 
-variables:
-  LT_USERNAME: 'roshank'      # Make sure these are set in pipeline or as secrets
-  LT_ACCESS_KEY: 'LT_pdN9i3brrjhqvhD82BuHMGL29zUl83MBQpdartL2hae9QdE'
-  # LT_BUILD_NAME: 'Playwright Build 123'
+# variables:
+#   BASE64_AUTH: $(BASE64_AUTH)
+#   TEST_RUN_ID: $(TEST_RUN_ID)
 
-steps:
-  - checkout: self  # Clones your GitHub repo
+stages:
+- stage: RunSanityTests
+  displayName: Run Sanity Tests on LambdaTest
 
-  - script: echo "Running on Azure DevOps"
+  jobs:
+  - job: SanityTest
+    displayName: Trigger and Validate Sanity Test
 
-  - script: npm install
-    displayName: 'Install dependencies'
+    steps:
 
-  - script: npx playwright test
-    displayName: 'Run Playwright Tests'
+    - task: Bash@3
+      displayName: Trigger Sanity Test on LambdaTest
+      name: TriggerTest
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo "Triggering sanity tests on LambdaTest"
 
-  - task: LambdatestResults@1
-    inputs:
-      username: 'roshank'
-      accessKey: 'LT_pdN9i3brrjhqvhD82BuHMGL29zUl83MBQpdartL2hae9QdE'
-      # buildName: 'Playwright Build 123'
-    displayName: 'Publish LambdaTest Results'
+          response=$(curl --silent --location 'https://test-manager-api.lambdatest.com/api/atm/v1/hyperexecute' \
+            --header 'accept: application/json' \
+            --header 'Content-Type: application/json' \
+            --header "Authorization: Basic $BASE64_AUTH" \
+            --data "{
+              \"test_run_id\": \"01KT5E7P5Q8KXARD56BB2PE049\",
+              \"concurrency\": 1
+            }")
+
+          echo "Response: $response"
+
+          job_id=$(echo "$response" | jq -r '.job_id')
+
+          if [ -z "$job_id" ] || [ "$job_id" = "null" ]; then
+            echo "Failed to retrieve Job ID"
+            exit 1
+          fi
+
+          echo "Job ID: $job_id"
+
+          echo "##vso[task.setvariable variable=JOB_ID]$job_id"
+
+    - task: Bash@3
+      displayName: Check Test Status
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo "Checking test status for Job ID: $(JOB_ID)"
+
+          sleep 240
+
+          response=$(curl --silent --location "https://api.hyperexecute.cloud/v2.0/job/$(JOB_ID)" \
+            --header "accept: application/json" \
+            --header "Authorization: Basic cm9zaGFuazpMVF9ZTDJ4WlFpUExWUkdHdE93dEZvT0VWZkdhOWx6RklKZkZmQnptQnREYXVPVDFjSw==")
+
+          echo "Response: $response"
+
+          status=$(echo "$response" | jq -r '.data.status')
+
+          echo "Test status: $status"
+
+          if [ "$status" != "completed" ]; then
+            echo "Tests failed or are not completed."
+            exit 1
+          fi
+
+          echo "Sanity tests passed successfully."
