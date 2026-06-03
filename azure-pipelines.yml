@@ -12,8 +12,8 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  BASE64_AUTH: cm9zaGFuazpMVF9ZTDJ4WlFpUExWUkdHdE93dEZvT0VWZkdhOWx6RklKZkZmQnptQnREYXVPVDFjSw==
-  TEST_RUN_ID: 01KT5E7P5Q8KXARD56BB2PE049
+  BASE64_AUTH: 'cm9zaGFuazpMVF9ZTDJ4WlFpUExWUkdHdE93dEZvT0VWZkdhOWx6RklKZkZmQnptQnREYXVPVDFjSw=='
+  TEST_RUN_ID: '01KT5E7P5Q8KXARD56BB2PE049'
 
 stages:
 - stage: RunSanityTests
@@ -31,14 +31,14 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          echo "Triggering sanity tests on LambdaTest"
+          echo "Triggering sanity tests on LambdaTest..."
 
           response=$(curl --silent --location 'https://test-manager-api.lambdatest.com/api/atm/v1/hyperexecute' \
             --header 'accept: application/json' \
             --header 'Content-Type: application/json' \
-            --header "Authorization: Basic $BASE64_AUTH" \
+            --header "Authorization: Basic $(BASE64_AUTH)" \
             --data "{
-              \"test_run_id\": \"$TEST_RUN_ID\",
+              \"test_run_id\": \"$(TEST_RUN_ID)\",
               \"concurrency\": 1
             }")
 
@@ -56,27 +56,54 @@ stages:
           echo "##vso[task.setvariable variable=JOB_ID]$job_id"
 
     - task: Bash@3
-      displayName: Check Test Status
+      displayName: Wait For Test Completion
       inputs:
         targetType: 'inline'
         script: |
           echo "Checking test status for Job ID: $(JOB_ID)"
 
-          sleep 240
+          MAX_ATTEMPTS=60
+          ATTEMPT=0
 
-          response=$(curl --silent --location "https://api.hyperexecute.cloud/v2.0/job/$(JOB_ID)" \
-            --header "accept: application/json" \
-            --header "Authorization: Basic $BASE64_AUTH")
+          while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
 
-          echo "Response: $response"
+            response=$(curl --silent --location "https://api.hyperexecute.cloud/v2.0/job/$(JOB_ID)" \
+              --header "accept: application/json" \
+              --header "Authorization: Basic $(BASE64_AUTH)")
 
-          status=$(echo "$response" | jq -r '.data.status')
+            status=$(echo "$response" | jq -r '.data.status')
 
-          echo "Test status: $status"
+            echo "Current status: $status"
 
-          if [ "$status" != "completed" ]; then
-            echo "Tests failed or are not completed."
-            exit 1
-          fi
+            if [ "$status" = "completed" ]; then
 
-          echo "Sanity tests passed successfully."
+              failed_count=$(echo "$response" | jq -r '.data.jobSummary.scenarioStageSummary.statusCountsExcludingRetries.failed // 0')
+
+              echo "Failed scenarios: $failed_count"
+
+              if [ "$failed_count" -gt 0 ]; then
+                echo "One or more test scenarios failed."
+                exit 1
+              fi
+
+              echo "All tests passed successfully."
+              exit 0
+
+            elif [ "$status" = "failed" ] || \
+                 [ "$status" = "error" ] || \
+                 [ "$status" = "aborted" ] || \
+                 [ "$status" = "cancelled" ]; then
+
+              echo "HyperExecute job ended with status: $status"
+              exit 1
+            fi
+
+            ATTEMPT=$((ATTEMPT + 1))
+
+            echo "Job still running. Poll attempt $ATTEMPT/$MAX_ATTEMPTS"
+            sleep 30
+
+          done
+
+          echo "Timed out waiting for HyperExecute job completion."
+          exit 1
